@@ -11,6 +11,8 @@ http://blixt.org/articles/tabbed-navigation-using-css#section=introduction
 
 1. Clone the project
 
+    ```
     git clone git@github.com:jlkwison2/react-tabs.git
-
+    ```
+	
 2. Open tabs.html using an internet browser. Tested working on Chrome Version 32.0.1700.102 m and Firefox 26.0.
