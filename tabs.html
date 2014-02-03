@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>React Tabs</title>
+    <link rel="stylesheet" type="text/css" href="tab.css">
+    <script src="http://fb.me/react-0.8.0.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.8.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+  </head>
+  <body>
+    <div id="tabs_placeholder"></div>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
+		
+		var SampleForm = React.createClass({
+			render: function() {
+			return <form>
+						<input /><br/>
+						<input type="submit" />	
+				   </form>;
+            }
+		});
+
+        var Tabs = React.createClass({
+            getInitialState: function() {
+                return {
+					tabs: this.props.details,
+                    active: 0
+                };
+            },
+            render: function() {
+                return <div>
+                            <ol id="toc">
+                                <TabsSwitcher items={this.state.tabs} active={this.state.active} onTabClick={this.handleTabClick}/>
+                                <TabsContent items={this.state.tabs} active={this.state.active}/>
+                            </ol>
+                       </div>;
+            },
+            handleTabClick: function(index) {
+                this.setState({active: index})
+            }
+        });
+
+        var TabsSwitcher = React.createClass({
+            render: function() {
+                var active = this.props.active;
+                var items = this.props.items.map(function(item, index) {
+                    return <li className={'' + (active === index ? 'current' : '')}><a href="#" onClick={this.onClick.bind(this, index)}>
+                        {item.title}
+                    </a></li>;
+                }.bind(this));
+                return <div>{items}</div>;
+            },
+            onClick: function(index) {
+                this.props.onTabClick(index);
+            }
+        });
+
+        var TabsContent = React.createClass({
+            render: function() {
+                var active = this.props.active;
+                var items = this.props.items.map(function(item, index) {
+                    return <div className={'tabs-panel ' + (active === index ? 'tabs-panel_selected' : '')}>{item.content}</div>;
+                });
+                return <div>{items}</div>;
+            }
+        });
+
+        React.renderComponent(
+            <Tabs details={[{title: 'Tab 1', content: <SampleForm/>},
+                            {title: 'Tab 2', content: 'Content 2'},
+                            {title: 'Tab 3', content: 'Content 3'}]} />,
+			
+            document.body
+        );
+
+    </script>
+  </body>
+</html>
